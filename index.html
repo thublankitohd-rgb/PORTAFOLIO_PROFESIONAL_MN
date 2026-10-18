@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuel A. Núñez R. | Portafolio Gamer UI</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root, [data-bs-theme="dark"] {
+            --bg-main: #021526;
+            --bg-card: #03203c;
+            --text-main: #e2e8f0;
+            --text-muted-custom: #94a3b8;
+            --btn-white: #ffffff;
+            --btn-white-glow: rgba(255, 255, 255, 0.4);
+            --neon-red: #ff2a5f;
+            --warm-green: #34d399;
+            --warm-green-glow: rgba(52, 211, 153, 0.4);
+            --border-glow: rgba(0, 229, 255, 0.3);
+            --pcb-line: rgba(16, 185, 129, 0.18);
+            --pcb-node: rgba(52, 211, 153, 0.35);
+        }
+
+        [data-bs-theme="light"] {
+            --bg-main: #e0f2fe;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted-custom: #475569;
+            --btn-white: #0f172a;
+            --btn-white-glow: rgba(15, 23, 42, 0.2);
+            --neon-red: #e11d48;
+            --warm-green: #059669;
+            --warm-green-glow: rgba(5, 150, 105, 0.3);
+            --border-glow: rgba(2, 132, 199, 0.3);
+            --pcb-line: rgba(5, 150, 105, 0.15);
+            --pcb-node: rgba(5, 150, 105, 0.3);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main) !important;
+            color: var(--text-main) !important;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-main) !important;
+        }
+
+        /* Canvas Fijo para Fondo de Placa Madre (Verde Cálido Suave) */
+        #pcb-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--bg-main) !important;
+            border-bottom: 1px solid var(--border-glow);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .nav-link {
+            color: var(--text-main) !important;
+            font-weight: 600;
+        }
+
+        /* Hero Banner Gamer Compacto y Centrado */
+        .hero-banner {
+            background: linear-gradient(90deg, rgba(255, 42, 95, 0.85), rgba(2, 21, 38, 0.95)), url('https://avatars.githubusercontent.com/u/236252703?s=400');
+            background-size: cover;
+            background-position: center 20%;
+            border-radius: 20px;
+            padding: 24px 30px;
+            border: 2px solid var(--neon-red);
+            box-shadow: 0 0 25px rgba(255, 42, 95, 0.3);
+        }
+
+        /* Badge Bendición en Negro Fading */
+        .badge-bless {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Tarjetas Gamer */
+        .cyber-card {
+            background-color: var(--bg-card) !important;
+            border: 1px solid var(--border-glow) !important;
+            border-radius: 16px;
+            color: var(--text-main) !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .cyber-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+        }
+
+        .text-muted {
+            color: var(--text-muted-custom) !important;
+        }
+
+        /* Redes Sociales Icons */
+        .hero-social-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            display: inline-block;
+        }
+        .hero-social-icon:hover {
+            transform: translateY(-4px) scale(1.15);
+            filter: drop-shadow(0 0 8px var(--warm-green));
+        }
+
+        /* Botones en Blanco Elegante */
+        .btn-neon {
+            background-color: var(--btn-white);
+            color: #021526 !important;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 0 15px var(--btn-white-glow);
+            transition: all 0.3s ease;
+        }
+        [data-bs-theme="light"] .btn-neon {
+            color: #ffffff !important;
+        }
+        .btn-neon:hover {
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+            transform: scale(1.02);
+        }
+
+        /* Botón Flotante Volver Arriba (Lado Derecho) */
+        #btn-back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 2px solid var(--btn-white);
+            box-shadow: 0 0 15px var(--btn-white-glow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        #btn-back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        #btn-back-to-top:hover {
+            background: var(--btn-white);
+            color: #021526;
+            box-shadow: 0 0 25px var(--btn-white-glow);
+            transform: translateY(-3px);
+        }
+
+        /* Efecto Onda Clic Verde Cálido Exacto sin Distorsión */
+        .click-ripple {
+            position: fixed;
+            border-radius: 50%;
+            border: 2px solid var(--warm-green);
+            box-shadow: 0 0 12px var(--warm-green);
+            pointer-events: none;
+            animation: ripple-animation 0.5s ease-out forwards;
+            z-index: 9999;
+        }
+        @keyframes ripple-animation {
+            0% {
+                width: 0px;
+                height: 0px;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                width: 90px;
+                height: 90px;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-main) !important;
+            border-top: 1px solid var(--border-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas para el Fondo Animado de Placa Madre -->
+    <canvas id="pcb-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-info" href="#">
+                <i class="fa-solid fa-gamepad me-2"></i> MANUEL.DEV
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(0.8);"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stack">Stack</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experiencia">Experiencia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#videos">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <li class="nav-item">
+                        <button id="darkModeToggle" class="btn btn-outline-info btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-moon"></i> Modo Dark/Light
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 100px;">
+        
+        <!-- Banner Principal Gamer Fino, Fading y Centrado -->
+        <section id="inicio" class="hero-banner mb-5">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-8">
+                    <span class="badge badge-bless mb-2 px-3 py-2 text-uppercase rounded-pill">🙏 ¡Dios te bendiga! | Bienvenido a mi Portafolio</span>
+                    <h1 class="display-4 fw-bold text-white mb-2">PORTAFOLIO <span style="color: #00e5ff;">2026</span></h1>
+                    <h3 class="h5 text-warning mb-2">Manuel A. Núñez R. | Estudiante de Ing. en Sistemas y Computación</h3>
+                    <p class="lead text-light mb-3 fs-6" style="opacity: 0.95;">
+                        ¡Dios te bendiga rica y abundantemente! Soy un estudiante apasionado por aprender cosas nuevas constantemente. Cuento con formación técnica en programación, informática avanzada, contabilidad y una Licenciatura en Teología Bíblica.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#contacto" class="btn btn-neon px-4 py-2 rounded-pill">Contáctame 🚀</a>
+                        <a href="#proyectos" class="btn btn-outline-light px-4 py-2 rounded-pill">Ver Proyectos 💻</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="https://avatars.githubusercontent.com/u/236252703?s=400&u=31592a88c488cc946ab49d1dd504a1246a78f45a&v=4" alt="Manuel A. Núñez R." class="rounded-circle border border-info border-3 img-fluid mb-2" style="width: 150px; height: 150px; object-fit: cover; box-shadow: 0 0 15px #00e5ff;">
+                    
+                    <!-- Tarjeta de Redes Sociales Compacta -->
+                    <div class="cyber-card p-2 d-inline-block w-100">
+                        <p class="small text-uppercase fw-bold mb-1 text-info" style="font-size: 0.75rem; letter-spacing: 1px;">
+                            🌐 MIS REDES SOCIALES Y CONTACTO
+                        </p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="https://www.linkedin.com/in/manuel-nu%C3%B1ez-5a5aa5350/?isSelfProfile=true" target="_blank" class="text-info hero-social-icon" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="https://www.youtube.com/@manuelnunez4778" target="_blank" class="text-danger hero-social-icon" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                            <a href="https://github.com/thublankitohd-rgb" target="_blank" class="text-secondary hero-social-icon" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                            <a href="https://wa.me/18097758647" target="_blank" class="text-success hero-social-icon" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="https://www.instagram.com/manuel_nunez0405/" target="_blank" class="text-warning hero-social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/manuel.nunez.203751/" target="_blank" class="text-primary hero-social-icon" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stack Tecnológico -->
+        <section id="stack" class="mb-5">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">🛠️ Software & Stack Skills</h2>
+                <p class="text-muted">Tecnologías y herramientas principales</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="cyber-card p-4 text-center h-100">
+                        <i class="fa-brands fa-html5 fa-4x mb-3 text-danger"></i>
+                        <h4>HTML5</h4>
+                        <p class="text-muted small">Estructuración e interfaces web semánticas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-5">
+                    <div class="cyber-card p-4 text-center h-100">
+                        <i class="fa-solid fa-code fa-4x mb-3 text-info"></i>
+                        <h4>C# (Lo básico)</h4>
+                        <p class="text-muted small">Lógica de programación y desarrollo en .NET.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proyectos Destacados -->
+        <section id="proyectos" class="mb-5">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">🚀 Proyectos Destacados</h2>
+                <p class="text-muted">Mis desarrollos principales</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="cyber-card p-4 h-100 d-flex flex-column">
+                        <div class="mb-3 badge bg-info text-dark align-self-start">Web</div>
+                        <h5 class="fw-bold">CyberDev Portfolio</h5>
+                        <p class="text-muted flex-grow-1">Mi proyecto web principal interactivo con estética moderna y responsiva.</p>
+                        <a href="https://thublankitohd-rgb.github.io/CyberDev_Manuel-Nu-ez/" target="_blank" class="btn btn-neon btn-sm mt-3">Ver Proyecto 🌐</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="cyber-card p-4 h-100 d-flex flex-column">
+                        <div class="mb-3 badge bg-success align-self-start">App</div>
+                        <h5 class="fw-bold">App Móvil .NET MAUI</h5>
+                        <p class="text-muted flex-grow-1">Desarrollo de interfaz adaptable para dispositivos móviles utilizando C#.</p>
+                        <span class="badge bg-secondary mt-3">Próximamente</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="cyber-card p-4 h-100 d-flex flex-column">
+                        <div class="mb-3 badge bg-warning text-dark align-self-start">Diseño</div>
+                        <h5 class="fw-bold">Diseño UI/UX Ciberpunk</h5>
+                        <p class="text-muted flex-grow-1">Maquetación visual enfocada en experiencia de usuario oscura y atractiva.</p>
+                        <span class="badge bg-secondary mt-3">En desarrollo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experiencia Laboral -->
+        <section id="experiencia" class="mb-5">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">💼 Experiencia Laboral</h2>
+                <p class="text-muted">Roles y puestos desempeñados</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4">
+                    <div class="cyber-card p-4 text-center h-100">
+                        <i class="fa-solid fa-boxes-stacked fa-2x mb-3 text-info"></i>
+                        <h5>Encargado de inventario</h5>
+                        <p class="text-muted small mb-1">ImportadorasCanelas Inc.</p>
+                        <span class="badge bg-secondary">2019 - 2024</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cyber-card p-4 text-center h-100">
+                        <i class="fa-solid fa-print fa-2x mb-3 text-warning"></i>
+                        <h5>Digitador e Imprenta</h5>
+                        <p class="text-muted small mb-1">Shalom Imprenta</p>
+                        <span class="badge bg-secondary">Servicios Operativos</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cyber-card p-4 text-center h-100">
+                        <i class="fa-solid fa-server fa-2x mb-3 text-success"></i>
+                        <h5>Soporte en Data Centers</h5>
+                        <p class="text-muted small mb-1">ChatWind</p>
+                        <span class="badge bg-secondary">Soporte TI</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Videos Destacados -->
+        <section id="videos" class="mb-5">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">🎥 Videos Destacados</h2>
+                <p class="text-muted">Haz clic en la vista previa para reproducir el video</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="cyber-card p-3 h-100">
+                        <div class="position-relative overflow-hidden rounded-3 mb-3" style="cursor: pointer;" onclick="openVideo('BARh4x1dY0k', 'player1')">
+                            <img src="https://img.youtube.com/vi/BARh4x1dY0k/maxresdefault.jpg" alt="Vista previa Video 1" class="img-fluid w-100" style="object-fit: cover; max-height: 280px;">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                <span class="btn btn-danger rounded-circle p-3 shadow-lg fs-3"><i class="fa-solid fa-play"></i></span>
+                            </div>
+                        </div>
+                        <div id="player1" class="ratio ratio-16x9 mb-3 d-none">
+                            <iframe src="https://www.youtube.com/embed/BARh4x1dY0k?autoplay=1" title="Video 1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                        <h5 class="fw-bold">🎥 Cómo Usar Variables y Eventos en .NET MAUI | C#</h5>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="cyber-card p-3 h-100">
+                        <div class="position-relative overflow-hidden rounded-3 mb-3" style="cursor: pointer;" onclick="openVideo('kvLd-dgi18U', 'player2')">
+                            <img src="https://img.youtube.com/vi/kvLd-dgi18U/maxresdefault.jpg" alt="Vista previa Video 2" class="img-fluid w-100" style="object-fit: cover; max-height: 280px;">
+                            <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                <span class="btn btn-danger rounded-circle p-3 shadow-lg fs-3"><i class="fa-solid fa-play"></i></span>
+                            </div>
+                        </div>
+                        <div id="player2" class="ratio ratio-16x9 mb-3 d-none">
+                            <iframe src="https://www.youtube.com/embed/kvLd-dgi18U?autoplay=1" title="Video 2" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                        <h5 class="fw-bold">🎥 Indicador de Usuario Correcto en .NET MAUI🔥</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario de Contacto -->
+        <section id="contacto" class="mb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="cyber-card p-5">
+                        <div class="text-center mb-4">
+                            <h2 class="fw-bold">✉️ Contáctame</h2>
+                            <p class="text-muted">¡Dios te bendiga! Envíame un mensaje directo.</p>
+                        </div>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fa-solid fa-user"></i> Nombre completo</label>
+                                <input type="text" class="form-control bg-transparent text-current" id="name" value="Manuel Núñez" required style="color: var(--text-main) !important;">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fa-solid fa-envelope"></i> Correo electrónico</label>
+                                <input type="email" class="form-control bg-transparent text-current" id="email" value="manuelnunezrossis@hotmail.com" required style="color: var(--text-main) !important;">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fa-solid fa-phone"></i> Teléfono</label>
+                                <input type="text" class="form-control bg-transparent text-current" id="phone" value="809 775-8647" required style="color: var(--text-main) !important;">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fa-solid fa-message"></i> Mensaje</label>
+                                <textarea class="form-control bg-transparent text-current" id="message" rows="4" required style="color: var(--text-main) !important;">¡Gracias por contactarme! ¡Dios te bendiga!</textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-neon px-5 py-2 rounded-pill">Enviar</button>
+                            </div>
+                            <div id="formMessage" class="mt-3 text-center fw-bold text-success" style="display: none;">✅ Mensaje enviado correctamente. ¡Bendiciones!</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center">
+        <div class="container">
+            <div class="d-flex justify-content-center gap-4 mb-3 fs-4">
+                <a href="https://www.linkedin.com/in/manuel-nu%C3%B1ez-5a5aa5350/?isSelfProfile=true" target="_blank" class="text-info" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/@manuelnunez4778" target="_blank" class="text-danger" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://github.com/thublankitohd-rgb" target="_blank" class="text-secondary" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://wa.me/18097758647" target="_blank" class="text-success" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/manuel_nunez0405/" target="_blank" class="text-warning" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/manuel.nunez.203751/" target="_blank" class="text-primary" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <p class="mb-0 text-muted">© 2026 Manuel A. Núñez R. | Todos los derechos reservados. ¡Dios te bendiga!</p>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante Volver Arriba -->
+    <button id="btn-back-to-top" title="Volver arriba">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 1. Modo Dark/Light
+        const toggleBtn = document.getElementById('darkModeToggle');
+        const htmlElement = document.documentElement;
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-bs-theme');
+            if (currentTheme === 'dark') {
+                htmlElement.setAttribute('data-bs-theme', 'light');
+                toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Modo Light';
+            } else {
+                htmlElement.setAttribute('data-bs-theme', 'dark');
+                toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Modo Dark';
+            }
+        });
+
+        // 2. Botón Flotante Volver Arriba
+        const backToTopBtn = document.getElementById('btn-back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 3. Efecto Onda Verde Cálido Exacto sin Distorsión
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.classList.add('click-ripple');
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.top = `${e.clientY}px`;
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 500);
+        });
+
+        // 4. Formulario de Contacto
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('formMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('formMessage').style.display = 'none';
+            }, 4000);
+        });
+
+        // 5. Reproductor de Videos
+        function openVideo(videoId, playerId) {
+            const playerDiv = document.getElementById(playerId);
+            const previewDiv = playerDiv.previousElementSibling;
+            previewDiv.classList.add('d-none');
+            playerDiv.classList.remove('d-none');
+        }
+
+        // 6. Animación Canvas de Placa Madre
+        const canvas = document.getElementById('pcb-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const circuits = [];
+        const pulses = [];
+        const numCircuits = 35;
+
+        for (let i = 0; i < numCircuits; i++) {
+            let x = Math.random() * canvas.width;
+            let y = Math.random() * canvas.height;
+            let points = [{x, y}];
+            let segments = Math.floor(Math.random() * 3) + 2;
+            
+            for (let j = 0; j < segments; j++) {
+                if (Math.random() > 0.5) {
+                    x += (Math.random() - 0.5) * 250;
+                } else {
+                    y += (Math.random() - 0.5) * 250;
+                }
+                points.push({x, y});
+            }
+            circuits.push(points);
+
+            pulses.push({
+                pathIndex: i,
+                progress: Math.random(),
+                speed: 0.0015 + Math.random() * 0.0025
+            });
+        }
+
+        function animatePCB() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const styles = getComputedStyle(document.documentElement);
+            const lineColor = styles.getPropertyValue('--pcb-line').trim() || 'rgba(16, 185, 129, 0.18)';
+            const nodeColor = styles.getPropertyValue('--pcb-node').trim() || 'rgba(52, 211, 153, 0.35)';
+
+            circuits.forEach(points => {
+                ctx.lineWidth = 1.4;
+                ctx.strokeStyle = lineColor;
+                ctx.fillStyle = nodeColor;
+
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < points.length; i++) {
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+                ctx.stroke();
+
+                points.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            });
+
+            pulses.forEach(pulse => {
+                pulse.progress += pulse.speed;
+                if (pulse.progress > 1) pulse.progress = 0;
+
+                const points = circuits[pulse.pathIndex];
+                const totalSegments = points.length - 1;
+                const currentSegmentFloat = pulse.progress * totalSegments;
+                const segmentIndex = Math.floor(currentSegmentFloat);
+                const t = currentSegmentFloat - segmentIndex;
+
+                if (segmentIndex < totalSegments) {
+                    const p1 = points[segmentIndex];
+                    const p2 = points[segmentIndex + 1];
+                    const x = p1.x + (p2.x - p1.x) * t;
+                    const y = p1.y + (p2.y - p1.y) * t;
+
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#34d399';
+                    ctx.fillStyle = '#34d399';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            });
+
+            requestAnimationFrame(animatePCB);
+        }
+
+        animatePCB();
+    </script>
+</body>
+</html>
